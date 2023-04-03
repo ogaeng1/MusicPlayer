@@ -1,0 +1,44 @@
+.list-wrap {
+    width: 15%;
+    height: 90%;
+    border: 1px solid black;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+    padding: 10px 0px;
+    & ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .item {
+        width: 260px;
+        height: 50px;
+        box-shadow: 0px 0px 5px black;
+        display: flex;
+        .item-info {
+            width: 200px;
+            height: 50px;
+            & p {
+                width: 190px;
+                height: 25px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .item-title {
+                font-size: 18px;
+            }
+            .item-artist {
+                margin-top: 5px;
+            }
+        }
+        & img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+    }
+}
