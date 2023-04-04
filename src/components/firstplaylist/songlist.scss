@@ -1,5 +1,5 @@
 .list-wrap {
-    width: 15%;
+    width: 20%;
     height: 90%;
     border: 1px solid black;
     border-radius: 10px;
@@ -13,10 +13,18 @@
         align-items: center;
         gap: 10px;
     }
+
     .item {
+        box-shadow: 0px 0px 5px black;
+    }
+
+    .playing {
+        box-shadow: 0px 0px 5px blue;
+    }
+
+    .item, .playing {
         width: 260px;
         height: 50px;
-        box-shadow: 0px 0px 5px black;
         display: flex;
         .item-info {
             width: 200px;
