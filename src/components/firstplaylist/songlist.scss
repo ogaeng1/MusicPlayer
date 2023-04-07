@@ -1,31 +1,33 @@
 .list-wrap {
     width: 20%;
     height: 90%;
-    border: 1px solid black;
+    border: 1px solid whitesmoke;
     border-radius: 10px;
     position: absolute;
     right: 0;
     margin-right: 30px;
     padding: 10px 0px;
+    color: aliceblue;
     & ul {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 20px;
     }
 
     .item {
-        box-shadow: 0px 0px 5px black;
+        box-shadow: 0px 0px 5px slategray;
     }
 
     .playing {
-        box-shadow: 0px 0px 5px blue;
+        box-shadow: 0px 0px 20px darkblue;
     }
 
     .item, .playing {
-        width: 260px;
+        width: 300px;
         height: 50px;
         display: flex;
+        padding: 5px;
         .item-info {
             width: 200px;
             height: 50px;
