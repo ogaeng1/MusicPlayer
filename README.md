@@ -1,46 +1,30 @@
-# Getting Started with Create React App
+# MusicPlayer (TypeScript + React)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+실행 방법
 
-## Available Scripts
+```
+1. git clone https://github.com/ogaeng1/MusicPlayer.git
+2. cd folderName
+3. npm i
+4. yarn start
+```
 
-In the project directory, you can run:
+## 제공하는 기능
 
-### `yarn start`
+1. 재생, 일시정지, 다음 곡, 이전 곡
+2. 프로그레스 바 원하는 부분 클릭시 해당 시점으로 건너뛰기
+3. 플레이 리스트 목록(현재 재생중인 노래 표시)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### ※ 음악 파일을 업로드해서 사용하는게 아닙니다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### (미리 등록된 음악 파일을 듣는 기능입니다)
 
-### `yarn test`
+<br />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 추후 추가될 수 있는 기능들
 
-### `yarn build`
+1. 셔플 기능
+2. 프로그레스 바 드래그로 시점 이동
+3. 다른 장르의 플레이 리스트..?
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+※ 프로젝트에 등록된 음악 파일은 "내돈내산" 입니다. 불법 다운로드 아닙니다.
