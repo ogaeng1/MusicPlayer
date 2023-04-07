@@ -9,6 +9,10 @@
 4. yarn start
 ```
 
+또는 [바로가기](https://music-player-ogaeng1.vercel.app/) 클릭
+
+<br />
+
 ## 제공하는 기능
 
 1. 재생, 일시정지, 다음 곡, 이전 곡
