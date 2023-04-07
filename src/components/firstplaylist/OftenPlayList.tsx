@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { musicData } from "../../data/music";
 import PlayerContainer from "../PlayerContainer";
 import SongList from "./SongList";
 import { TbPlayerTrackPrevFilled, TbPlayerTrackNextFilled } from "react-icons/tb";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { useRecoilState } from "recoil";
-import { PlayButtonState, CurrentTimeState, DurationState, CurrentIndexState } from "../../store/store";
+import { PlayButtonState, CurrentTimeState, DurationState, CurrentIndexState, ProgressState } from "../../store/store";
 import "./oftenlist.scss";
 
 const OftenPlayList = () => {
@@ -14,7 +14,21 @@ const OftenPlayList = () => {
     const [play, setPlay] = useRecoilState(PlayButtonState);
     const [currentTime, setCurrentTime] = useRecoilState(CurrentTimeState);
     const [duration, setDuration] = useRecoilState(DurationState);
-    // const [progress, setProgress] = useRecoilState(ProgressState);
+    const [progress, setProgress] = useRecoilState(ProgressState);
+    const progressBarRef = useRef<HTMLDivElement>(null);
+
+    const min = Math.floor(currentTime / 60);
+    const sec = Math.floor(currentTime % 60);
+
+    const savedCallback = useRef<any>();
+
+    const currentProgress = () => {
+        if (audio.duration) {
+            setDuration(audio.duration);
+        }
+        setCurrentTime(audio.currentTime);
+        setProgress(currentTime / duration);
+    }
 
     const onPlay = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
@@ -28,15 +42,16 @@ const OftenPlayList = () => {
         audio.pause();
     }
 
-    const onNextSong = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
+    const onNextSong = (e?: React.MouseEvent<HTMLButtonElement>) => {
+        if (e) {
+            e.stopPropagation();
+        }
         const nextIndex = currentSongIndex + 1;
         if (nextIndex >= musicData.length) {
             setCurrentSongIndex(0);
         } else {
             setCurrentSongIndex(nextIndex)
         }
-        setPlay(true);
     }
 
     const onPrevSong = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,21 +62,37 @@ const OftenPlayList = () => {
         } else {
             setCurrentSongIndex(prevIndex)
         }
-        setPlay(true);
     }
 
-    const onCurrentTimer = (time:number) => {
-        const min = Math.floor(time / 60);
-        const sec = Math.floor(time % 60);
-        return `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`
+    const onClickProgressBar = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (progressBarRef.current) {
+            const rect = progressBarRef.current.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const progressBar = x / rect.width;
+            audio.currentTime = progressBar * audio.duration;
+        }
     }
 
     useEffect(() => {
-        audio.src = musicData[currentSongIndex].url;
-        if (play) {
-            audio.play();
+        savedCallback.current = currentProgress;
+    })
+
+    useEffect(() => {
+        const tick = () => {
+            savedCallback.current();
         }
-    }, [currentSongIndex])
+        const timer = setInterval(tick, 1000);
+        return () => clearInterval(timer);
+    }, [])
+
+    useEffect(() => {
+        audio.src = musicData[currentSongIndex].url;
+        audio.addEventListener("canplaythrough", () => {
+            if (play) {
+                audio.play();
+            }
+        })
+    },[currentSongIndex])
 
     useEffect(() => {
         audio.addEventListener("timeupdate", () => {
@@ -70,6 +101,8 @@ const OftenPlayList = () => {
         audio.addEventListener("loadedmetadata", () => {
             setDuration(audio.duration)
         });
+        audio.addEventListener("ended", () => onNextSong())
+
     }, [audio])
 
         return (
@@ -78,22 +111,21 @@ const OftenPlayList = () => {
                 <span className="song-title">{musicData[currentSongIndex].title}</span>
                 <span className="song-artist">{musicData[currentSongIndex].artist}</span>
                 <img src={musicData[currentSongIndex].image} alt="" className="song-cover" />
-                <div className="progress-container">
-                    {/* <div className="progress-bar" 
-                    style={{ width: `${progress}` }}></div> */}
+                <div className="progress-container" onClick={onClickProgressBar} ref={progressBarRef}>
+                    <div className="progress-bar" style={{ width: `${Math.round(progress * 100)}%` }}></div>
                 </div>
                 <div className="time-stamp">
-                    <span>{onCurrentTimer(currentTime)}</span>
+                    <span>{`${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`}</span>
                     <span>{`${Math.floor(duration / 60) < 10 ?  "0" + Math.floor(duration / 60) : Math.floor(duration / 60)}`}
                     :{`${Math.floor(duration/10)%6}${Math.floor(duration%10)}`}</span>
                 </div>
                 <div className="playing-container">
-                    <button onClick={onPrevSong}><TbPlayerTrackPrevFilled /></button>
+                    <button className="prev-button" onClick={onPrevSong}><TbPlayerTrackPrevFilled /></button>
                     {play ?
-                        <button onClick={onPause}><FaPause /></button> :
+                        <button className="pause-button" onClick={onPause}><FaPause /></button> :
                         <button className="play-button" onClick={onPlay}><FaPlay /></button>
                         }
-                    <button onClick={onNextSong}><TbPlayerTrackNextFilled /></button>
+                    <button className="next-button" onClick={onNextSong}><TbPlayerTrackNextFilled /></button>
                 </div>
             </div>
             <SongList />
