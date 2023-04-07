@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-import { musicData } from "../data/music";
 
 export const PlayButtonState = atom({
     key: "PlayButtonState",
@@ -21,12 +20,7 @@ export const CurrentIndexState = atom({
     default: 0
 })
 
-// export const ProgressState = atom({
-//     key: "ProgressState",
-//     default: 0
-// })
-
-// export const PlayListState = atom({
-//     key: "PlayListState",
-//     default: [...musicData]
-// })
+export const ProgressState = atom({
+    key: "ProgressState",
+    default: 0
+})
